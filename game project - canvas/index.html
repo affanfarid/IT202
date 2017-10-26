@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript"></script>
+   </head>
+   <body>
+       <canvas id="myCanvas" width="400" height="500" style="border:1px solid #000000;"> </canvas>
+       <script>
+    //document.createElement("arrows");
+    var canvas = document.getElementById('myCanvas');
+   var context = canvas.getContext('2d');
+   var mainChar = [200,470,'blue'];
+   var beneChar = [200,31,'green',getRandomDirection(),getRandomDirection()];
+   var badChar = [100,31,'red',getRandomDirection(),getRandomDirection()];
+   var isGameOver =  false; 
+   var speed = 3;
+   var score = 0;
+   var lives = 3;	
+
+
+
+    //var a = new window.Image()
+    
+    /*global Image*/
+    /*global start*/
+    
+      var img= new Image();
+      img.onload=start;
+      img.src="https://i.imgur.com/mlvAXxT.png";
+      var pattern;
+      
+      
+    /*
+    var arrows = new Image();
+    arrows.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Parentesi_Angolate.svg/2000px-Parentesi_Angolate.svg.png'
+    var pattern=context.createPattern(arrows,'no-repeat');
+    */
+    function start(){
+        console.log("started");
+        pattern =context.createPattern(img,'repeat');
+        console.log("pattern created");
+         mainChar = [200,470,pattern];
+    }
+      
+    function getRandomDirection(){
+          var x =Math.floor((Math.random() * 10) + 0);
+          if(x>5) return 1;
+          else return -1;
+      }
+       
+       
+      
+      
+      
+     function distance(x1,y1,x2,y2){
+         var distance =  Math.pow( Math.pow((x2-x1),2) + Math.pow((y2-y1),2) , .5  );
+         return distance;
+     }
+       
+     function moveChar(char){
+        var random = Math.random() * canvas.width;
+        if(char[1]>=canvas.height-30){
+            reset();
+            
+        } 
+        char[1]=char[1]+speed; 
+     }
+      
+      
+       
+       function displayLives(){
+            context.font = "30px Arial";
+            context.fillStyle = "black";
+            context.fillText("Lives: "+lives,10,30);
+       }
+       
+       function displayScore(){
+            context.font = "30px Arial";
+            context.fillStyle = "black";
+            context.fillText("Score: "+score,240,30);
+       }
+       function drawCircle(x, y, color) {
+                
+                var centerX = x;
+                var centerY = y;
+                var radius = 30;
+        
+                context.beginPath();
+                context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                context.fillStyle = color;
+                context.fill();
+                //context.lineWidth = 5;
+                //context.strokeStyle = '#003300';
+               context.stroke();
+        }
+        function checkIfHit( mainBall, nextBall){
+            var x1 = mainBall[0];
+            var y1 = mainBall[1];
+            var x2 = nextBall[0];
+            var y2 = nextBall[1];
+            
+            var distance =  Math.pow( Math.pow((x2-x1),2) + Math.pow((y2-y1),2) , .5  );
+            if (distance <=60){
+                return true;
+            }
+            else return false;
+        }
+        function reset(){
+            //mainChar = [200,250,'blue'];
+            var newx1 =  Math.random() * canvas.width;
+            var newx2 =  Math.random() * canvas.width;
+             
+            beneChar = [newx1,31,'green',getRandomDirection(),getRandomDirection()];
+            badChar = [newx2,31,'red',getRandomDirection(),getRandomDirection()];
+        }
+        
+        function actUponHit(){
+            if(checkIfHit(mainChar,beneChar)){
+                score++;
+                reset();
+            }
+            if(checkIfHit(mainChar,badChar)){
+                lives--;
+                reset();
+            }
+            if(lives<=0){
+                //end game
+            }
+            
+        }
+        
+       
+       
+       
+       
+       
+       /*
+       drawCircle(mainChar[0], mainChar[1],mainChar[2]);
+       drawCircle(beneChar[0], beneChar[1],beneChar[2]);
+       drawCircle(badChar[0], badChar[1],badChar[2]);
+       displayScore();
+       displayLives();
+       
+        */
+        
+    function moveMainChar(){
+        //working here
+        
+        if(distance(mainChar[0],mainChar[1],canvas.width,mainChar[1]) <= 30   ){
+            mainChar[0]=30;
+        }
+        if(distance(mainChar[0],mainChar[1],0,mainChar[1]) <= 30   ){
+            mainChar[0]=canvas.width-30;
+        }
+        
+        //end working
+       document.addEventListener('keydown', function(event) {
+        if (event.keyCode == 37) {
+            //alert('Left was pressed');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            mainChar[0]=mainChar[0]-(speed*4);
+            drawCircle(mainChar[0], mainChar[1],mainChar[2]);
+            //displayScore();
+            //lives = lives -1;
+            //displayLives();
+            
+            
+        }
+        else if (event.keyCode == 39) {
+            //alert('Right was pressed');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            mainChar[0]=mainChar[0]+(speed*4);
+            drawCircle(mainChar[0], mainChar[1],mainChar[2]);
+            //displayScore();
+            //displayLives();
+        }
+        
+        }, true);
+    }
+    function endGame(){
+        context.font = "50px Arial";
+        context.fillStyle = "red";
+        context.fillText("GAME OVER",45,220);
+    }
+    
+    function draw(){
+           context.clearRect(0, 0, canvas.width, canvas.height);
+           //loop through the following
+           //animate the circles
+           //check
+           //moveMainChar();
+         if(lives!=0){  
+           actUponHit();
+           moveChar(beneChar);
+           moveChar(badChar);
+           drawCircle(mainChar[0], mainChar[1],mainChar[2]);
+           //moveBene
+           drawCircle(beneChar[0], beneChar[1],beneChar[2]);
+           drawCircle(badChar[0], badChar[1],badChar[2]);
+           
+           displayScore();
+           displayLives();
+         }
+           /*
+           if (lives==0){
+                 isGameOver=true;
+                 console.log("isGameOver=true");
+                 endGame();
+             }
+             */
+           /*  
+           if (isGameOver==false){
+            //window.requestAnimationFrame(draw);
+           console.log("isGameOver=false;");
+         }
+         */
+         if (lives==0){
+             displayScore();
+             endGame();
+         }
+           window.requestAnimationFrame(draw);
+           
+       }
+       //
+       //drawCircle(mainChar[0], mainChar[1],mainChar[2]);
+     
+     
+     moveMainChar();
+     draw();
+     //else endGame();
+        //requestAnimationFrame(draw); 
+          
+      </script>
+  </body>
+</html>

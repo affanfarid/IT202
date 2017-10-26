@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript"></script>
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    
+      
+      
+      
+   </head>
+   <body>
+       
+       <script>
+            //
+          // Define your database
+          //
+          var db = new Dexie("settings_database");
+          db.version(1).stores({
+              settings: 'name,value'
+          });
+          
+        /*var d = new Date(); // for now
+        d.getHours(); // => 9
+        d.getMinutes(); // =>  30
+        d.getSeconds(); // => 51
+        */
+        
+        db.on("populate",function(){
+           var d = new Date();
+           var hours = d.getHours(); // => 9
+           var min = d.getMinutes(); // =>  30
+           var sec = d.getSeconds(); // => 51
+           var time = hours+":"+min+":"+sec;
+           
+           db.setings.add({name: "displayName", value: "Display Name"}); 
+           db.setings.add({name: "shareLocationData", value: false});
+           db.setings.add({name: "lastAccessed", value: d});
+        });
+        
+        db.open();
+        
+        
+          //
+          // Put some data into it
+          //
+          /*db.settings.put({name: "Nicolas", shoeSize: 8}).then (function(){
+              //
+              // Then when data is stored, read from it
+              //
+              return db.friends.get('Nicolas');
+          }).then(function (friend) {
+              //
+              // Display the result
+              //
+              alert ("Nicolas has shoe size " + friend.shoeSize);
+          }).catch(function(error) {
+             //
+             // Finally don't forget to catch any error
+             // that could have happened anywhere in the
+             // code blocks above.
+             //
+             alert ("Ooops: " + error);
+          }); 
+          */
+            
+            
+   
+      </script>
+  </body>
+</html>

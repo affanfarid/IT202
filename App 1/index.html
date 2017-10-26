@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Info windows</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    
+ 
+    <div class="form-group"><label>Enter Zip Code:</label>
+    <input id="zipcode" class="form-control"  /></div>
+     
+    
+     
+    <button type="button" id ="button1" class="add_field_button">Search</button>
+    
+    
+    <script type='text/javascript'>
+     $(document).ready(function() {
+
+         $("#button1").click(function(e) {
+
+             var from = $("#zipcode").val();
+             $('viewport').html('<a target="_blank" href="https://data.cityofchicago.org/resource/cdmx-wzbz.json?zip_code=' + from);
+
+         });
+
+     });
+    </script>
+    
+    <script>
+    //new script
+    $(document).ready(function() {
+
+         $("button1").click(function(e) {
+
+             var from = $("zipcode").val();
+             var url = $('viewport').html('<a target="_blank" href="https://data.cityofchicago.org/resource/cdmx-wzbz.json?zip_code=' + from);
+
+         });
+
+     });
+    
+    
+    
+    
+      //var input = $("zipcode").val()
+      
+      // This example displays a marker at the center of Australia.
+      // When the user clicks the marker, an info window opens.
+
+      function initMap() {
+        //var uluru = {lat: -25.363, lng: 131.044};
+        var place = {lat: 41.8781, lng: -87.6298};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: place
+        });
+        
+        $.get(url,function(response){
+                    //console.log(response);
+                    $.each(response,function(i,v){
+                     // $("body").append(v.street_address + "<br>");
+                      var place1 = {lat: parseFloat(v.latitude), lng: parseFloat(v.longitude)};
+                      var contentString = v.status;
+                      var infowindow = new google.maps.InfoWindow({
+                          content: contentString
+                        });
+                      var marker = new google.maps.Marker({
+                          position: place1,
+                          map: map,
+                          title: contentString
+                        });
+                        marker.addListener('click', function() {
+                          infowindow.open(map, marker);
+                               });
+                      
+                      
+                    })
+                    });
+        
+        
+
+        
+      }
+    </script>
+    <script> $.get("https://data.cityofchicago.org/resource/hec5-y4x5.json?&$limit=100",function(response){
+                    console.log(response);
+                    });</script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI_i6IXpkyRzPYQQZGQdn6mmXJPWZKadA&callback=initMap">
+    </script>
+  </body>
+</html>
