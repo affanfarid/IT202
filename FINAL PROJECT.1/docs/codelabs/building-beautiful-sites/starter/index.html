@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <style>
+  
+          * { box-sizing:border-box; }
+      
+      /* basic stylings ------------------------------------------ */
+      body 				 { background:url(https://scotch.io/wp-content/uploads/2014/07/61.jpg); }
+      .container 		{ 
+        font-family:'Roboto';
+        width:600px; 
+        margin:30px auto 0; 
+        display:block; 
+        background:#FFF;
+        padding:10px 50px 50px;
+      }
+      h2 		 { 
+        text-align:center; 
+        margin-bottom:50px; 
+      }
+      h2 small { 
+        font-weight:normal; 
+        color:#888; 
+        display:block; 
+      }
+      .footer 	{ text-align:center; }
+      .footer a  { color:#53B2C8; }
+      
+      /* form starting stylings ------------------------------- */
+      .group 			  { 
+        position:relative; 
+        margin-bottom:45px; 
+      }
+      input 				{
+        font-size:18px;
+        padding:10px 10px 10px 5px;
+        display:block;
+        width:300px;
+        border:none;
+        border-bottom:1px solid #757575;
+      }
+      input:focus 		{ outline:none; }
+      
+      /* LABEL ======================================= */
+      label 				 {
+        color:#999; 
+        font-size:18px;
+        font-weight:normal;
+        position:absolute;
+        pointer-events:none;
+        left:5px;
+        top:10px;
+        transition:0.2s ease all; 
+        -moz-transition:0.2s ease all; 
+        -webkit-transition:0.2s ease all;
+      }
+      
+      /* active state */
+      input:focus ~ label, input:valid ~ label 		{
+        top:-20px;
+        font-size:14px;
+        color:#5264AE;
+      }
+      
+      /* BOTTOM BARS ================================= */
+      .bar 	{ position:relative; display:block; width:300px; }
+      .bar:before, .bar:after 	{
+        content:'';
+        height:2px; 
+        width:0;
+        bottom:1px; 
+        position:absolute;
+        background:#5264AE; 
+        transition:0.2s ease all; 
+        -moz-transition:0.2s ease all; 
+        -webkit-transition:0.2s ease all;
+      }
+      .bar:before {
+        left:50%;
+      }
+      .bar:after {
+        right:50%; 
+      }
+      
+      /* active state */
+      input:focus ~ .bar:before, input:focus ~ .bar:after {
+        width:50%;
+      }
+      
+      /* HIGHLIGHTER ================================== */
+      .highlight {
+        position:absolute;
+        height:60%; 
+        width:100px; 
+        top:25%; 
+        left:0;
+        pointer-events:none;
+        opacity:0.5;
+      }
+      
+      /* active state */
+      input:focus ~ .highlight {
+        -webkit-animation:inputHighlighter 0.3s ease;
+        -moz-animation:inputHighlighter 0.3s ease;
+        animation:inputHighlighter 0.3s ease;
+      }
+      
+      /* ANIMATIONS ================ */
+      @-webkit-keyframes inputHighlighter {
+      	from { background:#5264AE; }
+        to 	{ width:0; background:transparent; }
+      }
+      @-moz-keyframes inputHighlighter {
+      	from { background:#5264AE; }
+        to 	{ width:0; background:transparent; }
+      }
+      @keyframes inputHighlighter {
+      	from { background:#5264AE; }
+        to 	{ width:0; background:transparent; }
+      }
+  </style>
+  <style>
+  
+    /* -- import Roboto Font ---------------------------- */
+@import "https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic";
+
+/* -- You can use this tables in Bootstrap (v3) projects. -- */
+ @import "//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css";
+
+
+/* -- Box model ------------------------------- */
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* -- Demo style ------------------------------- */
+html, body {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+}
+
+html {
+  position: relative;
+  overflow-x: hidden;
+  margin: 16px;
+  padding: 0;
+  min-height: 100%;
+  font-size: 62.5%; // For rem units support
+}
+
+body {
+  font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  letter-spacing: 0.01rem;
+  color: #212121;
+  background-color: #f5f5f5;
+
+  // Font Rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#demo {
+  margin: 20px auto;
+  max-width: 960px;
+}
+
+// Material Design typography
+// https://codepen.io/zavoloklom/pen/IkaFL
+#demo h1 {
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+  letter-spacing: 0;
+  font-weight: 300;
+  color: #212121;
+  text-transform: inherit;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+#demo h2 {
+  font-size: 1.5rem;
+  line-height: 2.8rem;
+  letter-spacing: 0.01rem;
+  font-weight: 400;
+  color: #212121;
+  text-align: center;
+}
+
+// Material Design shadows
+// 
+.shadow-z-1 {
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.12),
+                      0 1px 2px 0 rgba(0,0,0,.24);
+  -moz-box-shadow:    0 1px 3px 0 rgba(0,0,0,.12),
+                      0 1px 2px 0 rgba(0,0,0,.24);
+  box-shadow:         0 1px 3px 0 rgba(0,0,0,.12),
+                      0 1px 2px 0 rgba(0,0,0,.24);
+}
+
+
+/* -- Material Design Table style -------------- */
+
+// Variables
+
+@table-header-font-weight:      400;
+@table-header-font-color:       #757575;
+
+@table-cell-padding:            1.6rem;
+@table-condensed-cell-padding:  @table-cell-padding/2;
+
+
+@table-bg:                      #fff;
+@table-bg-accent:               #f5f5f5;
+@table-bg-hover:                rgba(0,0,0,.12);
+@table-bg-active:               @table-bg-hover;
+@table-border-color:            #e0e0e0;
+
+
+
+// Mixins
+// -----------------
+.transition(@transition) {
+  -webkit-transition: @transition;
+       -o-transition: @transition;
+          transition: @transition;
+}
+
+// Tables
+//
+// -----------------
+
+// Baseline styles
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 2rem;
+  background-color: @table-bg;
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      .transition(all .3s ease);
+      > th,
+      > td {
+        text-align: left;
+        padding: @table-cell-padding;
+        vertical-align: top;
+        border-top: 0;
+        .transition(all .3s ease);
+      }
+    }
+  }
+  > thead > tr > th {
+    font-weight: @table-header-font-weight;
+    color: @table-header-font-color;
+    vertical-align: bottom;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+  }
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+  > tbody + tbody {
+    border-top: 1px solid rgba(0,0,0,.12);
+  }
+
+  // Nesting
+  .table {
+    background-color: @table-bg;
+  }
+
+  // Remove border
+  .no-border {
+    border: 0;
+  }
+}
+
+// Condensed table w/ half padding
+.table-condensed {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: @table-condensed-cell-padding;
+      }
+    }
+  }
+}
+
+
+// Bordered version
+//
+// Add horizontal borders between columns.
+.table-bordered {
+  border: 0;
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        border: 0;
+        border-bottom: 1px solid @table-border-color;
+      }
+    }
+  }
+  > thead > tr {
+    > th,
+    > td {
+      border-bottom-width: 2px;
+    }
+  }
+}
+
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+.table-striped {
+  > tbody > tr:nth-child(odd) {
+    > td,
+    > th {
+      background-color: @table-bg-accent;
+    }
+  }
+}
+
+// Hover effect
+//
+.table-hover {
+  > tbody > tr:hover {
+    > td,
+    > th {
+      background-color: @table-bg-hover;
+    }
+  }
+}
+
+// Responsive tables (vertical)
+//
+// Wrap your tables in `.table-responsive-vertical` and we'll make them mobile friendly
+// by vertical table-cell display. Only applies <768px. Everything above that will display normally.
+// For correct display you must add 'data-title' to each 'td'
+.table-responsive-vertical {
+
+  @media screen and (max-width: 768px) {
+
+    // Tighten up spacing
+    > .table {
+      margin-bottom: 0;
+      background-color: transparent;
+      > thead,
+      > tfoot {
+        display: none;
+      }
+
+      > tbody {
+        display: block;
+
+        > tr {
+          display: block;
+          border: 1px solid @table-border-color;
+          border-radius: 2px;
+          margin-bottom: @table-cell-padding;
+
+          > td {
+            background-color: @table-bg;
+            display: block;
+            vertical-align: middle;
+            text-align: right;
+          }
+          > td[data-title]:before {
+            content: attr(data-title);
+            float: left;
+            font-size: inherit;
+            font-weight: @table-header-font-weight;
+            color: @table-header-font-color;
+          }
+        }
+      }
+    }
+    
+    // Special overrides for shadows
+    &.shadow-z-1 {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      > .table > tbody > tr {
+        border: none;
+        .shadow-z-1();
+      }
+    }
+
+    // Special overrides for the bordered tables
+    > .table-bordered {
+      border: 0;
+
+      // Nuke the appropriate borders so that the parent can handle them
+      > tbody {
+        > tr {
+          > td {
+            border: 0;
+            border-bottom: 1px solid @table-border-color;
+          }
+          > td:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+
+    // Special overrides for the striped tables
+    > .table-striped {
+      > tbody > tr > td,
+      > tbody > tr:nth-child(odd) {
+          background-color: @table-bg;
+      }
+      > tbody > tr > td:nth-child(odd) {
+          background-color: @table-bg-accent;
+      }
+    }
+
+    // Special overrides for hover tables
+    > .table-hover {
+      > tbody {
+        > tr:hover > td,
+        > tr:hover {
+          background-color: @table-bg;
+        }
+        > tr > td:hover {
+          background-color: @table-bg-hover;
+        }
+      }
+    }
+  }
+}
+
+
+// CSS/LESS Color variations
+//
+// --------------------------------
+
+
+.table-striped.table-mc-red > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-red > tbody > tr:nth-child(odd) > th {
+    background-color: #fde0dc;
+}
+.table-hover.table-mc-red > tbody > tr:hover > td,
+.table-hover.table-mc-red > tbody > tr:hover > th {
+    background-color: #f9bdbb;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-red > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-red > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-red > tbody > tr > td:nth-child(odd) {
+        background-color: #fde0dc;
+    }
+    .table-responsive-vertical .table-hover.table-mc-red > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-red > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-red > tbody > tr > td:hover {
+        background-color: #f9bdbb;
+    }
+}
+.table-striped.table-mc-pink > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-pink > tbody > tr:nth-child(odd) > th {
+    background-color: #fce4ec;
+}
+.table-hover.table-mc-pink > tbody > tr:hover > td,
+.table-hover.table-mc-pink > tbody > tr:hover > th {
+    background-color: #f8bbd0;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-pink > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-pink > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-pink > tbody > tr > td:nth-child(odd) {
+        background-color: #fce4ec;
+    }
+    .table-responsive-vertical .table-hover.table-mc-pink > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-pink > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-pink > tbody > tr > td:hover {
+        background-color: #f8bbd0;
+    }
+}
+.table-striped.table-mc-purple > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-purple > tbody > tr:nth-child(odd) > th {
+    background-color: #f3e5f5;
+}
+.table-hover.table-mc-purple > tbody > tr:hover > td,
+.table-hover.table-mc-purple > tbody > tr:hover > th {
+    background-color: #e1bee7;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-purple > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-purple > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-purple > tbody > tr > td:nth-child(odd) {
+        background-color: #f3e5f5;
+    }
+    .table-responsive-vertical .table-hover.table-mc-purple > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-purple > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-purple > tbody > tr > td:hover {
+        background-color: #e1bee7;
+    }
+}
+.table-striped.table-mc-deep-purple > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-deep-purple > tbody > tr:nth-child(odd) > th {
+    background-color: #ede7f6;
+}
+.table-hover.table-mc-deep-purple > tbody > tr:hover > td,
+.table-hover.table-mc-deep-purple > tbody > tr:hover > th {
+    background-color: #d1c4e9;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-deep-purple > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-deep-purple > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-deep-purple > tbody > tr > td:nth-child(odd) {
+        background-color: #ede7f6;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-purple > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-deep-purple > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-purple > tbody > tr > td:hover {
+        background-color: #d1c4e9;
+    }
+}
+.table-striped.table-mc-indigo > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-indigo > tbody > tr:nth-child(odd) > th {
+    background-color: #e8eaf6;
+}
+.table-hover.table-mc-indigo > tbody > tr:hover > td,
+.table-hover.table-mc-indigo > tbody > tr:hover > th {
+    background-color: #c5cae9;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-indigo > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-indigo > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-indigo > tbody > tr > td:nth-child(odd) {
+        background-color: #e8eaf6;
+    }
+    .table-responsive-vertical .table-hover.table-mc-indigo > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-indigo > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-indigo > tbody > tr > td:hover {
+        background-color: #c5cae9;
+    }
+}
+.table-striped.table-mc-blue > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-blue > tbody > tr:nth-child(odd) > th {
+    background-color: #e7e9fd;
+}
+.table-hover.table-mc-blue > tbody > tr:hover > td,
+.table-hover.table-mc-blue > tbody > tr:hover > th {
+    background-color: #d0d9ff;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-blue > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-blue > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-blue > tbody > tr > td:nth-child(odd) {
+        background-color: #e7e9fd;
+    }
+    .table-responsive-vertical .table-hover.table-mc-blue > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-blue > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-blue > tbody > tr > td:hover {
+        background-color: #d0d9ff;
+    }
+}
+.table-striped.table-mc-light-blue > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-light-blue > tbody > tr:nth-child(odd) > th {
+    background-color: #e1f5fe;
+}
+.table-hover.table-mc-light-blue > tbody > tr:hover > td,
+.table-hover.table-mc-light-blue > tbody > tr:hover > th {
+    background-color: #b3e5fc;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-light-blue > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-light-blue > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-light-blue > tbody > tr > td:nth-child(odd) {
+        background-color: #e1f5fe;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-blue > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-light-blue > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-blue > tbody > tr > td:hover {
+        background-color: #b3e5fc;
+    }
+}
+.table-striped.table-mc-cyan > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-cyan > tbody > tr:nth-child(odd) > th {
+    background-color: #e0f7fa;
+}
+.table-hover.table-mc-cyan > tbody > tr:hover > td,
+.table-hover.table-mc-cyan > tbody > tr:hover > th {
+    background-color: #b2ebf2;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-cyan > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-cyan > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-cyan > tbody > tr > td:nth-child(odd) {
+        background-color: #e0f7fa;
+    }
+    .table-responsive-vertical .table-hover.table-mc-cyan > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-cyan > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-cyan > tbody > tr > td:hover {
+        background-color: #b2ebf2;
+    }
+}
+.table-striped.table-mc-teal > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-teal > tbody > tr:nth-child(odd) > th {
+    background-color: #e0f2f1;
+}
+.table-hover.table-mc-teal > tbody > tr:hover > td,
+.table-hover.table-mc-teal > tbody > tr:hover > th {
+    background-color: #b2dfdb;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-teal > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-teal > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-teal > tbody > tr > td:nth-child(odd) {
+        background-color: #e0f2f1;
+    }
+    .table-responsive-vertical .table-hover.table-mc-teal > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-teal > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-teal > tbody > tr > td:hover {
+        background-color: #b2dfdb;
+    }
+}
+.table-striped.table-mc-green > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-green > tbody > tr:nth-child(odd) > th {
+    background-color: #d0f8ce;
+}
+.table-hover.table-mc-green > tbody > tr:hover > td,
+.table-hover.table-mc-green > tbody > tr:hover > th {
+    background-color: #a3e9a4;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-green > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-green > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-green > tbody > tr > td:nth-child(odd) {
+        background-color: #d0f8ce;
+    }
+    .table-responsive-vertical .table-hover.table-mc-green > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-green > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-green > tbody > tr > td:hover {
+        background-color: #a3e9a4;
+    }
+}
+.table-striped.table-mc-light-green > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-light-green > tbody > tr:nth-child(odd) > th {
+    background-color: #f1f8e9;
+}
+.table-hover.table-mc-light-green > tbody > tr:hover > td,
+.table-hover.table-mc-light-green > tbody > tr:hover > th {
+    background-color: #dcedc8;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-light-green > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-light-green > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-light-green > tbody > tr > td:nth-child(odd) {
+        background-color: #f1f8e9;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-green > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-light-green > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-light-green > tbody > tr > td:hover {
+        background-color: #dcedc8;
+    }
+}
+.table-striped.table-mc-lime > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-lime > tbody > tr:nth-child(odd) > th {
+    background-color: #f9fbe7;
+}
+.table-hover.table-mc-lime > tbody > tr:hover > td,
+.table-hover.table-mc-lime > tbody > tr:hover > th {
+    background-color: #f0f4c3;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-lime > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-lime > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-lime > tbody > tr > td:nth-child(odd) {
+        background-color: #f9fbe7;
+    }
+    .table-responsive-vertical .table-hover.table-mc-lime > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-lime > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-lime > tbody > tr > td:hover {
+        background-color: #f0f4c3;
+    }
+}
+.table-striped.table-mc-yellow > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-yellow > tbody > tr:nth-child(odd) > th {
+    background-color: #fffde7;
+}
+.table-hover.table-mc-yellow > tbody > tr:hover > td,
+.table-hover.table-mc-yellow > tbody > tr:hover > th {
+    background-color: #fff9c4;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-yellow > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-yellow > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-yellow > tbody > tr > td:nth-child(odd) {
+        background-color: #fffde7;
+    }
+    .table-responsive-vertical .table-hover.table-mc-yellow > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-yellow > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-yellow > tbody > tr > td:hover {
+        background-color: #fff9c4;
+    }
+}
+.table-striped.table-mc-amber > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-amber > tbody > tr:nth-child(odd) > th {
+    background-color: #fff8e1;
+}
+.table-hover.table-mc-amber > tbody > tr:hover > td,
+.table-hover.table-mc-amber > tbody > tr:hover > th {
+    background-color: #ffecb3;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-amber > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-amber > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-amber > tbody > tr > td:nth-child(odd) {
+        background-color: #fff8e1;
+    }
+    .table-responsive-vertical .table-hover.table-mc-amber > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-amber > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-amber > tbody > tr > td:hover {
+        background-color: #ffecb3;
+    }
+}
+.table-striped.table-mc-orange > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-orange > tbody > tr:nth-child(odd) > th {
+    background-color: #fff3e0;
+}
+.table-hover.table-mc-orange > tbody > tr:hover > td,
+.table-hover.table-mc-orange > tbody > tr:hover > th {
+    background-color: #ffe0b2;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-orange > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-orange > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-orange > tbody > tr > td:nth-child(odd) {
+        background-color: #fff3e0;
+    }
+    .table-responsive-vertical .table-hover.table-mc-orange > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-orange > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-orange > tbody > tr > td:hover {
+        background-color: #ffe0b2;
+    }
+}
+.table-striped.table-mc-deep-orange > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-deep-orange > tbody > tr:nth-child(odd) > th {
+    background-color: #fbe9e7;
+}
+.table-hover.table-mc-deep-orange > tbody > tr:hover > td,
+.table-hover.table-mc-deep-orange > tbody > tr:hover > th {
+    background-color: #ffccbc;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive-vertical .table-striped.table-mc-deep-orange > tbody > tr > td,
+    .table-responsive-vertical .table-striped.table-mc-deep-orange > tbody > tr:nth-child(odd) {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-striped.table-mc-deep-orange > tbody > tr > td:nth-child(odd) {
+        background-color: #fbe9e7;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-orange > tbody > tr:hover > td,
+    .table-responsive-vertical .table-hover.table-mc-deep-orange > tbody > tr:hover {
+        background-color: @table-bg;
+    }
+    .table-responsive-vertical .table-hover.table-mc-deep-orange > tbody > tr > td:hover {
+        background-color: #ffccbc;
+    }
+}
+  </style>
+  <style type="text/css">
+  
+    @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+body {
+  background: #ffffff; 
+  color: #414141;
+  font: 400 17px/2em 'Source Sans Pro', sans-serif;
+}
+
+.select-box {
+  cursor: pointer;
+  position : relative;
+  max-width:  20em;
+  margin: 5em auto;
+  width: 100%;
+}
+
+.select,
+.label {
+  color: #414141;
+  display: block;
+  font: 400 17px/2em 'Source Sans Pro', sans-serif;
+}
+
+.select {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  padding: 5px 0;
+  height: 40px;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  background: none transparent;
+  border: 0 none;
+}
+.select-box1 {
+  background: #ececec;
+}
+
+.label {
+  position: relative;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.open .label::after {
+   content: "▲";
+}
+.label::after {
+  content: "▼";
+  font-size: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 5px 15px;
+  border-left: 5px solid #fff;
+}
+  </style>
+  <style>
+    #button1 {background-color: #008CBA;}
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <script >
+  
+    function doSomethingWithTextBox()
+    {
+      var year1 = document.getElementById('year1');
+      var year2 = document.getElementById('year2');
+      console.log(year1+'-'+year2);
+    
+    }
+    //doSomethingWithTextBox();
+  
+  </script>
+  
+  <script>
+    function make_base_auth(user, password) {
+    var tok = user + ':' + password;
+    var hash = btoa(tok);
+    return "Basic " + hash;
+  }
+  
+  function jsonResult(data){
+   
+     var city = "N/A";
+     var name = "n/A";
+     var wins = 'n/a';
+     var fg = 'n/a';
+     var threep = 'n/a';
+     var ft = 'n/a';
+     var blk = 'n/a';
+     var stl = 'n/a';
+     var reb = 'n/a';
+     var ast = 'n/a';
+     var pts = 'n/a';
+     if(data.overallteamstandings.hasOwnProperty('teamstandingsentry'))
+     {
+       var teamObj = data.overallteamstandings.teamstandingsentry[0].team;
+       if (teamObj != null)
+       {
+         if(teamObj.hasOwnProperty('City')) 
+         {
+             city = teamObj['City'];
+         }
+         
+         if( teamObj.hasOwnProperty('Name')) 
+         {
+             name = teamObj['Name'];
+         }
+       }
+       
+       var statsObj = data.overallteamstandings.teamstandingsentry[0].stats;
+       if(statsObj != null)
+       {
+         if(statsObj.hasOwnProperty('Wins')) 
+         {
+             wins = statsObj.Wins['#text'] ;
+         }
+         
+         if(statsObj.hasOwnProperty('Fg2PtPct')) 
+         {
+             fg = statsObj.Fg2PtPct['#text'];
+         }
+         
+         if(statsObj.hasOwnProperty('Fg3PtPct')) 
+         {
+             threep = statsObj.Fg3PtPct['#text'];
+         }
+         
+         if(statsObj.hasOwnProperty('FtPct')) 
+         {
+             ft = statsObj.FtPct['#text'];
+         }
+         if(statsObj.hasOwnProperty('BlkPerGame')) 
+         {
+             blk = statsObj.BlkPerGame['#text'];
+         }
+         if(statsObj.hasOwnProperty('StlPerGame')) 
+         {
+             stl = statsObj.StlPerGame['#text'];
+         }
+         if(statsObj.hasOwnProperty('RebPerGame')) 
+         {
+             reb = statsObj.RebPerGame['#text'];
+         }
+         if(statsObj.hasOwnProperty('AstPerGame')) 
+         {
+             ast = statsObj.AstPerGame['#text'];
+         }
+         if(statsObj.hasOwnProperty('PtsPerGame')) 
+         {
+             pts = statsObj.PtsPerGame['#text'];
+         }
+         
+         
+       }
+    }
+    html = "<tr>";
+    html = html +  "<td>" + city + "</td>";
+    html = html +  "<td>" + name + "</td>";
+    html = html +  "<td>" + wins + "</td>";
+    html = html +  "<td>" + fg + "</td>";
+    html = html +  "<td>" + threep + "</td>";
+    html = html +  "<td>" + ft + "</td>";
+    html = html +  "<td>" + blk + "</td>";
+    html = html +  "<td>" + stl + "</td>";
+    html = html +  "<td>" + reb + "</td>";
+    html = html +  "<td>" + ast + "</td>";
+    html = html +  "<td>" + pts + "</td>";
+    html = html +  "</tr>";
+     
+    $('#t_results').append(html);
+  }
+  
+ 
+  
+  
+   
+  
+  
+    var teamName = 'GSW';
+    
+    var currentYear = 2015;
+    var nextYear = currentYear+1;
+    
+    var userID="affanfarid1";
+    var password = "password1";
+    //var url = "https://"+userID+":"+password+"@api.mysportsfeeds.com/v1.1/pull/nba/"+currentYear+"-"+nextYear+"-regular/overall_team_standings.json?teamstats&team="+teamName;
+    var url = "https://"+userID+":"+password+"@api.mysportsfeeds.com/v1.1/pull/nba/"+currentYear+"-"+nextYear+"-regular/overall_team_standings.json?teamstats=W,STL/G,REB/G,PTS/G,AST/G,BS/G,3P%25,2P%25,FT%25&team="+teamName;
+    
+    var g_year1;
+    var g_year2;
+    var g_team1;
+    var g_team2;
+    
+    function makeUrl (y, t)
+    {
+      var nextYear = parseInt(y) + 1;
+       //url = "https://"+userID+":"+password+"@api.mysportsfeeds.com/v1.1/pull/nba/"+y+"-"+nextYear+"-regular/overall_team_standings.json?teamstats&team="+t;
+       url = "https://"+userID+":"+password+"@api.mysportsfeeds.com/v1.1/pull/nba/"+y+"-"+nextYear+"-regular/overall_team_standings.json?teamstats=W,STL/G,REB/G,PTS/G,AST/G,BS/G,3P%25,2P%25,FT%25&team="+t;
+
+      
+    }
+    
+    function doWork ()
+    {
+      doClear();
+      initStats(1);
+      initStats(2);
+    }
+    
+    function doClear ()
+    {
+      
+      document.getElementById("t_results").innerHTML = "";
+    }
+    
+    function initStats(flag) 
+    {
+      
+      
+
+        if (flag ==1)
+        {
+           g_year1 = document.getElementById("year1").value;
+           g_year2 = document.getElementById("year2").value;
+           g_team1 = document.getElementById("team1").value;
+           g_team2 = document.getElementById("team2").value;
+           //alert ("Year 1 = " + g_year1 + " Year 2 = " + g_year2 + " Team 1 = " + g_team1 +  " Team2 = " + g_team2);
+           
+           makeUrl(g_year1, g_team1);
+           console.log ("Url = " + url);
+        } else {
+           
+           makeUrl(g_year2, g_team2);
+           console.log ("Url = " + url);
+          
+        }
+        
+        jQuery.ajax({
+            url: url,
+            dataType: "json",
+           beforeSend: function (xhr){ 
+            xhr.setRequestHeader('Authorization', make_base_auth(userID, password)); 
+           },
+          
+          success: function (data,status){
+              //alert('Thanks for your comment!' + status);
+              jsonResult(data);
+          }
+        });
+        
+      
+    }
+  
+  
+  
+    
+    
+    
+    
+   
+
+        
+      
+  </script>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>NBA Stats Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" sizes="192x192" href="https://images.vexels.com/media/users/3/131556/isolated/preview/904af0f5df4690d4236d521bb141b97f-nba-logo-by-vexels.png">
+  <link rel="shortcut icon" href="https://images.vexels.com/media/users/3/131556/isolated/preview/904af0f5df4690d4236d521bb141b97f-nba-logo-by-vexels.png">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet"
+        href="https://unpkg.com/material-components-web@0.9.1/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="mdc-typography">
+  <header id="shrine-header"
+        class="mdc-toolbar mdc-toolbar--fixed mdc-theme--text-primary-on-background">
+  <div class="mdc-toolbar__row">
+    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+      <a id="shrine-nav-icon" class="material-icons mdc-ripple-surface"  
+            href="#" 
+           aria-label="Click to show the navigation menu"
+           aria-controls="shrine-nav-menu"
+           data-mdc-auto-init="MDCRipple"
+           data-mdc-ripple-is-unbounded>menu</a>
+      <h1 id="shrine-logo"          
+          class="mdc-toolbar__title"><span>NBA Stats </span></h1>
+    </section>
+  </div>
+</header>
+  <aside id="shrine-nav-menu" class="mdc-temporary-drawer" data-mdc-auto-init="MDCTemporaryDrawer">
+    <nav class="mdc-temporary-drawer__drawer">
+      <header class="mdc-temporary-drawer__header"></header>
+      <nav class="mdc-temporary-drawer__content mdc-list">
+        <a class="mdc-list-item" href="index.html">Compare Teams (Reg Season)</a>
+        <a class="mdc-list-item" href="index.1.html">Compare Players (Playoffs)</a>
+        <a class="mdc-list-item" href="index.2.html">Compare Players </a>
+        <a class="mdc-list-item" href="index.3.html">Your Team </a>
+      </nav>
+    </nav>
+  </aside>
+  <main id="shrine-products" class="mdc-layout-grid mdc-toolbar-fixed-adjust">
+  
+  </main>
+  <script src="https://unpkg.com/material-components-web@0.9.1/dist/material-components-web.min.js">
+</script>
+
+<div class="container">
+  
+  <h2>Enter Teams to Compare<small>Regular Season</small> </h2>
+  
+  <form action="#" id="greeting-form">
+    
+    <div class="group" id="div_year1">      
+      <input type="text" id ="year1" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Year 1</label>
+    </div>
+    
+    <select class="mdb-select" id="team1">
+      <option value="" disabled selected>Team 1</option>
+      <option value="ATL">Atlanta Hawks</option>
+      <option value="BKN">Brooklyn Nets</option>
+      <option value="BOS">Boston Celtics</option>
+      <option value="CHA">Charlotte Hornets</option>
+      <option value="CHI">Chicago Bulls</option>
+      <option value="CLE">Cleveland Cavaliers</option>
+      <option value="DAL">Dallas Mavericks</option>
+      <option value="DEN">Denver Nuggets</option>
+      <option value="DET">Detroit Pistons</option>
+      <option value="GSW">Golden State Warriors</option>
+      <option value="HOU">Houston Rockets</option>
+      <option value="IND">Indiana Pacers</option>
+      <option value="LAC">Los Angeles Clippers</option>
+      <option value="LAL">Los Angeles Lakers</option>
+      <option value="MEM">Memphis Grizzlies</option>
+      <option value="MIA">Miami Heat</option>
+      <option value="MIL">Milwaukee Bucks</option>
+      <option value="MIN">Minnesota Timberwolves</option>
+      <option value="NOP">New Orleans Pelicans</option>
+      <option value="NYK">New York Knicks</option>
+      <option value="OKC">Oklahoma City Thunder</option>
+      <option value="ORL">Orlando Magic</option>
+      <option value="PHI">Philadelphia 76ers</option>
+      <option value="PHX">Phoenix Suns</option>
+      <option value="POR">Portland Trail Blazers</option>
+      <option value="SAC">Sacramento Kings</option>
+      <option value="SAS">San Antonio Spurs</option>
+      <option value="TOR">Toronto Raptors</option>
+      <option value="UTA">Utah Jazz</option>
+      <option value="WAS">Washington Wizards</option>
+      
+    </select>
+    
+    <p>_____________________________________ </p>
+    <p>    </p>
+    <p>    </p>
+    
+    <div class="group" id="div_year2">      
+      <input type="text" id="year2" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Year 2</label>
+    </div>
+    
+    <select class="mdb-select" id="team2">
+      <option value="" disabled selected>Team 2</option>
+      <option value="ATL">Atlanta Hawks</option>
+      <option value="BKN">Brooklyn Nets</option>
+      <option value="BOS">Boston Celtics</option>
+      <option value="CHA">Charlotte Hornets</option>
+      <option value="CHI">Chicago Bulls</option>
+      <option value="CLE">Cleveland Cavaliers</option>
+      <option value="DAL">Dallas Mavericks</option>
+      <option value="DEN">Denver Nuggets</option>
+      <option value="DET">Detroit Pistons</option>
+      <option value="GSW">Golden State Warriors</option>
+      <option value="HOU">Houston Rockets</option>
+      <option value="IND">Indiana Pacers</option>
+      <option value="LAC">Los Angeles Clippers</option>
+      <option value="LAL">Los Angeles Lakers</option>
+      <option value="MEM">Memphis Grizzlies</option>
+      <option value="MIA">Miami Heat</option>
+      <option value="MIL">Milwaukee Bucks</option>
+      <option value="MIN">Minnesota Timberwolves</option>
+      <option value="NOP">New Orleans Pelicans</option>
+      <option value="NYK">New York Knicks</option>
+      <option value="OKC">Oklahoma City Thunder</option>
+      <option value="ORL">Orlando Magic</option>
+      <option value="PHI">Philadelphia 76ers</option>
+      <option value="PHX">Phoenix Suns</option>
+      <option value="POR">Portland Trail Blazers</option>
+      <option value="SAC">Sacramento Kings</option>
+      <option value="SAS">San Antonio Spurs</option>
+      <option value="TOR">Toronto Raptors</option>
+      <option value="UTA">Utah Jazz</option>
+      <option value="WAS">Washington Wizards</option>
+      
+    </select>
+    
+    
+    <p>    </p>
+    <p>    </p>
+    <button 
+    id="button1"
+    onclick="doWork()"
+    type="submit"
+      class="mdc-button
+             mdc-button--raised
+             mdc-ripple-surface"
+      data-mdc-auto-init="MDCRipple">
+      GO!
+    </button>
+    
+    
+
+ 
+  
+  
+    <label>Compare Regular Season Teams</label>
+  </form>
+      
+  
+  
+</div>
+<div id="msg"></div> 
+<script>
+  mdc.autoInit();
+  document.getElementById('shrine-nav-icon').addEventListener('click', function(evt) {
+    evt.preventDefault();
+    document.getElementById('shrine-nav-menu').MDCTemporaryDrawer.open = true;
+  });
+</script>
+
+
+
+
+
+<div id="stats">
+  <h2>Stats</h2>
+  
+  
+  <div class="table-responsive-vertical shadow-z-1">
+  
+  <table id="table" class="table table-hover table-mc-light-blue">
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Team</th>
+          <th>Wins</th>
+          <th>FG%</th>
+          <th>3P%</th>
+          <th>FT%</th>
+          <th>BLK</th>
+          <th>STL</th>
+          <th>REB</th>
+          <th>AST</th>
+          <th>PTS</th>
+        </tr>
+      </thead>
+      <tbody id="t_results">
+        
+        
+      </tbody>
+    </table>
+  </div>
+  
+  
+  </div>
+</div>
+
+
+
+
+
+
+</body>
+</html>
